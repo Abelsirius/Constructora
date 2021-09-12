@@ -307,3 +307,30 @@ select:focus > option:checked {
                   .resultados-accounts h2:hover{
                       background: #ccc;
                   }
+
+
+                  @media screen and  (max-width: 500px){
+                     .option-accounts .option-item{
+                         font-size: 10px;
+                     }
+                     h1{
+                      font-size: 15px;  
+                        }
+
+                        #nombre{
+                      width: 120px;
+                      font-size: 10px;
+                     } 
+                     #monto{
+                        width: 120px;
+                        font-size: 10px;
+
+                     } 
+                     .options-btn button{
+                         font-size: 12px;
+                     }
+                     #btn-add{
+                       font-size: 12px;
+                     }
+  
+  }                
