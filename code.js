@@ -1,17 +1,20 @@
 let btnAccountNew = document.querySelector(".newAccount");
-
+let btnResultados = document.querySelector(".resultados");
 
 
 
 const removeContentAdd =()=>{
 	let containerAccounts = document.querySelector(".container-accounts");	
    let contentAdd = document.querySelector(".content-add");
+   let containerResults = document.querySelector(".container-resultado");
    let containerNewAcc = document.querySelector(".container-newAccount")
-   if (contentAdd.classList.contains("visible") || containerAccounts.classList.contains("visible")) {
+   if (contentAdd.classList.contains("visible") || containerAccounts.classList.contains("visible") || containerResults.classList.contains("visible")) {
    	    btnAccountNew.textContent = "Volver";
    	    containerNewAcc.classList.replace("hidden","visible");
    	    contentAdd.classList.replace("visible","hidden");
    	    containerAccounts.classList.replace("visible","hidden");
+        containerResults.classList.replace("visible","hidden");
+
    }else{
    	    btnAccountNew.textContent = "Cuenta Nueva";
    	    containerNewAcc.classList.replace("visible","hidden")
@@ -38,11 +41,16 @@ const crearCuenta = (nameAcc,NameStore) =>{
 document.getElementById("btn-add").addEventListener("click",()=>{
      let nombre = document.getElementById("nombre").value;
      let monto = document.getElementById("monto").value;
-
+     let nameAcc = localStorage.getItem("nameAccount");
+    let nameObjectStore = localStorage.getItem("nameObjectStore");
 
      if (nombre.length > 0 & monto.length > 0) {
-        addObjects({nombre,monto});
+        if (nameAcc != null  & nameObjectStore != null) {
+         addObjects({nombre,monto});
         leerObjectos();
+        }else{
+            error("No Hay Cuentas Registradas")
+        }
      }
 })
 
@@ -60,7 +68,7 @@ btnCreateAcc.addEventListener("click",()=>{
         containerNewAcc.appendChild(h3)
         setTimeout(()=>{
         	h3.style.display = "none";
-        },3000)
+        },4000)
     }else{
     	let h3 = document.createElement("H3");
     	h3.classList.add("errorAcc")
@@ -68,7 +76,7 @@ btnCreateAcc.addEventListener("click",()=>{
         containerNewAcc.appendChild(h3)
         setTimeout(()=>{
         	h3.style.display = "none";
-        },3000)
+        },4000)
 
     }
     
@@ -134,6 +142,7 @@ const leerObjectos = ()=>{
     	const cursor = objectStore.openCursor();
     	cursor.addEventListener("success",()=>{
     	if (cursor.result) {
+            numbers(cursor.result.value.monto, cursor.result.value.nombre, cursor.result.source.name)
             let contentHTML  = HTMLCode(cursor.result.key, cursor.result.value, cursor.result.value);
             documentFrag.appendChild(contentHTML)
             cursor.result.continue();
@@ -186,6 +195,8 @@ const HTMLCode = (id,name,monto) =>{
 
     let h2 = document.createElement("H2");
     let h3 = document.createElement("H3");
+
+    h3.classList.add("dinero");
 
     h2.textContent = name.nombre;
     h2.setAttribute("contenteditable","true")
@@ -262,45 +273,74 @@ const HTMLCode = (id,name,monto) =>{
         btnShow.addEventListener("click",()=>{
          let nameAccount = localStorage.getItem("nameAccount");
          let nameObjectStore = localStorage.getItem("nameObjectStore");
-         let indexedDBRequest = indexedDB.open(nameAccount);
-         indexedDBRequest.addEventListener("success",()=>{
-         const db = indexedDBRequest.result;
-    	const idbTransaction = db.transaction(nameObjectStore,"readonly")    	
+        
+        if (nameAccount != null & nameObjectStore != null) {
+        let indexedDBRequest = indexedDB.open(nameAccount);
+        indexedDBRequest.addEventListener("success",()=>{
+        const db = indexedDBRequest.result;
+        const idbTransaction = db.transaction(nameObjectStore,"readonly")   
         const objectStore = idbTransaction.objectStore(nameObjectStore);
-    	const cursor = objectStore.openCursor();
-    	cursor.addEventListener("success",()=>{
-    	 if (cursor.result == null) {
-               error();
+        const cursor = objectStore.openCursor();
+        cursor.addEventListener("success",()=>{
+         if (cursor.result == null) {
+               error("¡NO HAY NADA EN LA CUENTA!");
             }else{
                 leerObjectos();
             }
-    	})        	
+        })        
          })
-    })
 
-      const error = () =>{
+        }
+     else{
+        error("¡NO HAY CUENTAS EN LA BASE DE DATOS!")
+     }
+
+     })
+      const error = (msj) =>{
       let divPadre = document.querySelector(".nombres");
-
      let div = document.createElement("DIV");
      div.classList.add("error");
 
-     div.textContent = "¡NO HAY DATOS!"
+     div.textContent = msj;
+     if (divPadre.lastElementChild == null) {
+        divPadre.appendChild(div);
+    }else if (divPadre.lastElementChild.classList.contains("error")) {
+          divPadre.removeChild(divPadre.lastElementChild)
+    }
 
-      divPadre.appendChild(div);
 
   }
 
+const deleteAccountDB = (nombre)=>{
+    let  borrarDataBase = indexedDB.deleteDatabase(nombre);
+
+    borrarDataBase.addEventListener("success",(e)=>{
+    console.log("La Base De Datos Fue Eliminada CORRECTAMENTE")
+    })
+}
 const showDataBase = (data) =>{
   let showNameAccount = document.querySelector(".name-account-client");
   let resultado = document.querySelector(".resultados-accounts")
   let containerAccounts = document.querySelector(".container-accounts");
+  let containerResults = document.querySelector(".container-resultado");    
   let contentAdd = document.querySelector(".content-add");
-  let h2 = document.createElement("H2"); 
+  let h2 = document.createElement("H2");
+  let span = document.createElement("SPAN");
+  span.textContent = "Eliminar";
+  span.classList.add("eliminarAcc");
+  span.addEventListener("click",()=>{
+     deleteAccountDB(data.name);
+     localStorage.removeItem("nameAccount")
+     localStorage.removeItem("nameObjectStore")
+     history.go(0)
+  }) 
   h2.addEventListener("click",()=>{
      showNameAccount.textContent = data.name;	
     if (contentAdd.classList.contains("hidden")) {
     	contentAdd.classList.replace("hidden","visible");
     	containerAccounts.classList.replace("visible","hidden");
+        containerResults.classList.replace("visible","hidden");
+
     }
   	mostrarCuenta(data.name,data.version)
   })
@@ -308,6 +348,7 @@ const showDataBase = (data) =>{
   h2.textContent = "Cuenta de:  " 
   b.textContent = data.name;
   h2.appendChild(b)
+  h2.appendChild(span)
   resultado.appendChild(h2)
 }
 
@@ -316,9 +357,11 @@ document.querySelector(".accounts").addEventListener("click",()=>{
     let contentAdd = document.querySelector(".content-add");
     let containerNewAcc = document.querySelector(".container-newAccount")	
 	let containerAccounts = document.querySelector(".container-accounts");
-    if (contentAdd.classList.contains("visible") || containerNewAcc.classList.contains("visible")) {
+    let containerResults = document.querySelector(".container-resultado");    
+    if (contentAdd.classList.contains("visible") || containerNewAcc.classList.contains("visible") || containerResults.classList.contains("visible")) {
     	contentAdd.classList.replace("visible","hidden");
     	containerNewAcc.classList.replace("visible","hidden");
+        containerResults.classList.replace("visible","hidden");
     	containerAccounts.classList.replace("hidden","visible");
     }
 
@@ -330,6 +373,110 @@ document.querySelector(".accounts").addEventListener("click",()=>{
           }
        })
 })
+
+
+        const numbers = (numeros,producto,nombreCliente)=>{
+         let h3Content = document.querySelector(".nameOfAccountClient")
+         let containerResults = document.querySelector(".content-resultados-of-buy");
+         let p = document.createElement("P");
+         let divNumers = document.querySelector(".contents-result-numbers");
+         let b = document.createElement("B");
+         let span = document.createElement("SPAN");
+        if (h3Content.lastElementChild == null || h3Content.lastElementChild.textContent != nombreCliente){
+                    if (h3Content.childNodes[1]) {
+                        h3Content.removeChild(h3Content.childNodes[1])
+                    }
+                    p.classList.add("clienteName");
+                    p.textContent = nombreCliente;
+                    h3Content.appendChild(p)
+         }
+        span.textContent = producto;
+         b.textContent ="S/ " + numeros;
+         b.classList.add("numbers");
+         b.appendChild(span)
+         divNumers.appendChild(b)
+         if (containerResults.lastElementChild.classList.contains("btn-total") == false ){
+                       let btn  = document.createElement("BUTTON");
+                      btn.classList.add("btn-total")
+                      btn.textContent = "Total";
+                      containerResults.appendChild(btn)
+                      btn.addEventListener("click",()=>{
+                        let contentnumber = document.querySelector(".monto-number");
+                        let number = document.querySelectorAll(".numbers");
+                        let suma = 0;
+                        for (let i = 0; i < number.length; i++) {
+                            let text = number[i].childNodes[0].textContent;
+                            let result = text.replace("S/ ","");
+                            suma+= Number(result);
+                        }
+                       contentnumber.textContent = "S/  " + suma;
+                      })
+         }
+
+
+        } 
+
+btnResultados.addEventListener("click",()=>{
+    let contentAdd = document.querySelector(".content-add");
+    let containerNewAcc = document.querySelector(".container-newAccount");   
+    let containerAccounts = document.querySelector(".container-accounts");
+    let containerResults = document.querySelector(".container-resultado");
+    if (contentAdd.classList.contains("visible") || containerNewAcc.classList.contains("visible") || containerAccounts.classList.contains("visible")) {
+        contentAdd.classList.replace("visible","hidden");
+        containerNewAcc.classList.replace("visible","hidden");
+        containerAccounts.classList.replace("visible","hidden");
+        containerResults.classList.replace("hidden","visible");
+            let nameAccount = localStorage.getItem("nameAccount");
+           let nameObjectStore = localStorage.getItem("nameObjectStore");
+        
+        if (nameAccount != null & nameObjectStore != null) {
+        let indexedDBRequest = indexedDB.open(nameAccount);
+        indexedDBRequest.addEventListener("success",()=>{
+        const db = indexedDBRequest.result;
+        const idbTransaction = db.transaction(nameObjectStore,"readonly")   
+        const objectStore = idbTransaction.objectStore(nameObjectStore);
+        document.querySelector(".monto-number").innerHTML="X";
+        document.querySelector(".contents-result-numbers").innerHTML="";
+        const cursor = objectStore.openCursor();
+        cursor.addEventListener("success",()=>{
+         if (cursor.result) {
+            numbers(cursor.result.value.monto, cursor.result.value.nombre, cursor.result.source.name)
+            cursor.result.continue();
+            }
+        })        
+         })}
+    }
+})
+
+let menubar = document.querySelector(".menu-bar");
+
+menubar.addEventListener("click",()=>{
+    let nav = document.querySelector(".option-accounts");
+    nav.classList.toggle("active")
+})
+
+window.addEventListener("DOMContentLoaded",()=>{
+    let h1Rofl = document.querySelector(".name-account-client");
+    let name = localStorage.getItem("nameAccount");
+    if (name) {
+        h1Rofl.textContent = name;
+    }
+})
+
+
+let optionsNav = document.querySelectorAll(".option-item");
+for (let i = 0; i < optionsNav.length; i++) {
+    optionsNav[i].addEventListener("click",()=>{
+            let nav = document.querySelector(".option-accounts");
+            nav.classList.remove("active")
+    })
+}
+
+
+
+
+       
+    
 
 
 

@@ -1,6 +1,7 @@
    	body{
          padding: 0;
          margin: 0;
+         overflow-x: hidden;
       }
 
 
@@ -101,6 +102,12 @@
          width: 100%;
 
       }
+      .content-resultados-of-buy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+     }
       h2{
          color:#ffc636;
          font-size: 35px;
@@ -156,7 +163,15 @@
       input{
       	width: 100%;
       }
-
+      .eliminarAcc{
+         cursor: pointer;
+         position: absolute;
+         right: 0;
+         padding: 0px 20px;
+      }
+    .eliminarAcc:hover{
+       color: #b21;
+    }
       #monto{
          width: 150px;
          padding: 5px;
@@ -211,6 +226,19 @@ select:focus > option:checked {
     display: none;
 }
 
+   .numbers{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-width: 150px;
+      padding: 2px 0px;
+    color: #1a0;
+}
+.numbers span{
+   color: #333;
+   font-size: 13px;
+   font-weight: lighter;
+}
 .data-new-acc{
        display: flex;
        justify-content: center;
@@ -231,6 +259,15 @@ select:focus > option:checked {
     font-weight: 500;
     color: #ccc;
 }
+   .btn-total{
+     margin: 10px 0;
+     padding: 5px;
+     font-size: 15px;
+     font-weight: 200;
+}
+   .btn-total:hover{
+       background: #eee;
+   }
 
    .contents input{
        border-radius: 5px;
@@ -243,11 +280,23 @@ select:focus > option:checked {
        font-weight: lighter;
 }
 .container-newAccount h4{
+    margin: 0;
+    padding: 20px 0;
     font-size: 25px;
     font-weight: bolder;
     text-align: center;
 }
 
+   .total-pago{ 
+   border-top: 1px solid #111;
+    min-width: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0px;
+}
+
+}
    .btn-create-acc input{
        padding: 5px 20px;
       font-size: 15px;
@@ -284,14 +333,29 @@ select:focus > option:checked {
               font-weight: 600;
               color: #222;
          }
-
+       .menu-bar{
+         display: none;
+         padding: 10px;
+         z-index: 100;
+       }
+        .menu-bar i{
+          z-index: 100;
+          font-size: 25px;
+          color: #e36e00;
+        }
          .resultados-accounts{
+            position: relative;
             width: 100%;
             height: fit-content;
             background: #aaa;
          }
+         .container-newAccount{
+               height: 100vh;
+               background: #fcf8f2;
+         }
 
          .resultados-accounts h2{
+
             cursor: pointer;
              padding: 20px 15px;
              font-size: 18px;
@@ -307,30 +371,135 @@ select:focus > option:checked {
                   .resultados-accounts h2:hover{
                       background: #ccc;
                   }
+               .result-title{
+                  margin: 0;
+                  padding: 20px 0;
+                  font-size: 25px;
+                  font-weight: 600;
+                  text-align: center;
+                  color: #ffb700;
+               }   
+            .container-resultado{
+               background: #fcf8f2;
+            }
 
+              .content-resultados-of-buy .monto{
+                   display: flex;
+                   justify-content: space-between;
+                   align-items: center;
+              }
+              .contents-result-numbers{
+               padding: 10px 20px;
+               overflow-y: scroll;
+              }
+               .nota{
+    position: relative;
+    top: 20px;
+    color: #fff;
+    /* margin-top: 20px; */
+    width: 200px;
+    padding: 10px 20px;
+    background: #555;
+    border-radius: 10px;
+    text-transform: uppercase;
+               }
+                .content-resultados-of-buy .monto h3{
+                  font-size: 18px;
+                  font-weight: 400;
+                  color: #ba5f14;
+                  padding: 0 20px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  flex-direction: column;              
+                } 
+                .clienteName{
+                  margin: 5px 0px;
+                  color: #ff6f00;
+                  font-weight: 900;
+                }
+                
+                .content-resultados-of-buy .monto span{
+                   font-size: 15px;
+                   font-weight: 300;
+                   color: #67de12;
+                   padding: 0 20px;
+                }
+                .monto-a-pagar{
+                  margin-bottom: 10px;
+                  border-radius: 5px;
+                  background: #ccc;
+                           padding: 10px 5px;
+                }
+                .montoOfAccountClient{
+                  color: #fff;
+                  font-size: 20px;
+                  font-weight: 600;
+                }
 
                   @media screen and  (max-width: 500px){
                      .option-accounts .option-item{
-                         font-size: 10px;
+                             font-size: 20px;
+    color: #d46802;
+    font-weight: 600;
+    padding: 10px 0px;
                      }
+                     .menu-bar{
+                        display: block;
+                     }
+                     .option-accounts{
+                        width: 200px;
+                        flex-direction: column;
+    display: flex;
+    justify-content: flex-start;
+    align-items: self-start;
+    list-style: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    background: #ccc;
+    margin: 0;
+    z-index: 100;
+    padding: 50px 20px;
+    background: #f7d1ad;
+    transform: translateX(100%);
+    transition: .3s;
+                     }
+               .option-accounts.active{
+   transform: translateX(0%);
+}
                      h1{
                       font-size: 15px;  
                         }
 
                         #nombre{
                       width: 120px;
-                      font-size: 10px;
+                      padding: 10px;
+                      font-size: 15px;
                      } 
                      #monto{
                         width: 120px;
-                        font-size: 10px;
+                        padding: 10px;
+                        font-size: 15px;
 
                      } 
                      .options-btn button{
-                         font-size: 12px;
+                         font-size: 20px;
                      }
                      #btn-add{
-                       font-size: 12px;
+                       font-size: 20px;
                      }
+                     h2{
+                       font-size: 29px;
+                     }
+                     .contentInputs{
+                        width: 60%;
+                     }
+                     .options{
+                        width: 40%;
+                     }
+                }
+              }
   
   }                
