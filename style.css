@@ -391,8 +391,15 @@ select:focus > option:checked {
               .contents-result-numbers{
                padding: 10px 20px;
                overflow-y: scroll;
-               height: 400px;
+               height: 280px;
               }
+   .contents-result-numbers::-webkit-scrollbar {
+    width: .60rem;
+    background-color: #f5e7c4;
+}
+.contents-result-numbersselect::-webkit-scrollbar-thumb {
+    background-color: #edb415;
+}
                .nota{
     position: relative;
     top: 20px;
