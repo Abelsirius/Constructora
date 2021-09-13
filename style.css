@@ -393,12 +393,13 @@ select:focus > option:checked {
                overflow-y: scroll;
                height: 280px;
               }
-   .contents-result-numbers::-webkit-scrollbar {
+
+::-webkit-scrollbar-thumb {
+    background-color: #edb415;
+}          
+::-webkit-scrollbar {
     width: .60rem;
     background-color: #f5e7c4;
-}
-.contents-result-numbersselect::-webkit-scrollbar-thumb {
-    background-color: #edb415;
 }
                .nota{
     position: relative;
