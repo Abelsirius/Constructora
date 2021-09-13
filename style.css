@@ -391,6 +391,7 @@ select:focus > option:checked {
               .contents-result-numbers{
                padding: 10px 20px;
                overflow-y: scroll;
+               height: 400px;
               }
                .nota{
     position: relative;
