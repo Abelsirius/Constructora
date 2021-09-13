@@ -317,9 +317,13 @@ const HTMLCode = (id,name,monto) =>{
 
 const deleteAccountDB = (nombre)=>{
     let  borrarDataBase = indexedDB.deleteDatabase(nombre);
+    borrarDataBase.addEventListener("error",()=>{
+          console.log("Error deleting database.");
+    })
     borrarDataBase.addEventListener("success",(e)=>{
     console.log("La Base De Datos Fue Eliminada CORRECTAMENTE")
     })
+    location.reload();
 }
 const showDataBase = (data) =>{
   let showNameAccount = document.querySelector(".name-account-client");
@@ -332,10 +336,10 @@ const showDataBase = (data) =>{
   span.textContent = "Eliminar";
   span.classList.add("eliminarAcc");
   span.addEventListener("click",()=>{
+     span.style.xIndex = 100000;
      deleteAccountDB(data.name);
      localStorage.removeItem("nameAccount")
      localStorage.removeItem("nameObjectStore")
-     history.go(0)
   }) 
   h2.addEventListener("click",()=>{
      showNameAccount.textContent = data.name;	
@@ -345,15 +349,14 @@ const showDataBase = (data) =>{
         containerResults.classList.replace("visible","hidden");
 
     }
-    console.log(data.name,data.version)
-  	mostrarCuenta(data.name,data.version)
+  	mostrarCuenta(data.name)
   })
   let b = document.createElement("B");
   h2.textContent = "Cuenta de:  " 
   b.textContent = data.name;
   h2.appendChild(b)
-  h2.appendChild(span)
   resultado.appendChild(h2)
+  resultado.appendChild(span)
 }
 
 

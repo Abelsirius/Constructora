@@ -164,13 +164,22 @@
       	width: 100%;
       }
       .eliminarAcc{
-         cursor: pointer;
-         position: absolute;
-         right: 0;
-         padding: 0px 20px;
-      }
+    cursor: pointer;
+    position: relative;
+    right: 0;
+    top: 0;
+    height: 100%;
+    font-size: 18px;
+    font-weight: lighter;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px;
+}
     .eliminarAcc:hover{
-       color: #b21;
+       color: #fff;
+       background: #b21;
     }
       #monto{
          width: 150px;
@@ -344,10 +353,13 @@ select:focus > option:checked {
           color: #e36e00;
         }
          .resultados-accounts{
-            position: relative;
-            width: 100%;
-            height: fit-content;
-            background: #aaa;
+position: relative;
+    width: 100%;
+    height: fit-content;
+    background: #aaa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
          }
          .container-newAccount{
                height: 100vh;
@@ -355,7 +367,7 @@ select:focus > option:checked {
          }
 
          .resultados-accounts h2{
-
+             flex: 1;
             cursor: pointer;
              padding: 20px 15px;
              font-size: 18px;
