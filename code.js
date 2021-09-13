@@ -117,14 +117,18 @@ const addObjects = (obj, monto) =>{
      let nameAcc = localStorage.getItem("nameAccount");
     let nameObjectStore = localStorage.getItem("nameObjectStore");
 
-    const indexedDBRequest = indexedDB.open(nameAcc);
+   if (nameAcc != null & nameObjectStore != null) {
+        const indexedDBRequest = indexedDB.open(nameAcc);
 
     indexedDBRequest.addEventListener("success",()=>{
-    	const db = indexedDBRequest.result;
-    	const idbTransaction = db.transaction(nameObjectStore,"readwrite")
-    	const objectStore = idbTransaction.objectStore(nameObjectStore);
-    	objectStore.add(obj, monto)
+        const db = indexedDBRequest.result;
+        const idbTransaction = db.transaction(nameObjectStore,"readwrite")
+        const objectStore = idbTransaction.objectStore(nameObjectStore);
+        objectStore.add(obj, monto)
     })
+}else{
+    alert("no hay cuentas")
+}
 }
 
 const leerObjectos = ()=>{
@@ -341,6 +345,7 @@ const showDataBase = (data) =>{
         containerResults.classList.replace("visible","hidden");
 
     }
+    console.log(data.name,data.version)
   	mostrarCuenta(data.name,data.version)
   })
   let b = document.createElement("B");
@@ -367,7 +372,7 @@ document.querySelector(".accounts").addEventListener("click",()=>{
        indexedDB.databases().then(res=>{
        	    let resultado = document.querySelector(".resultados-accounts").innerHTML= "";	
             for (let i = 0; i < res.length; i++) {
-
+              console.log(res[i])
    	          showDataBase(res[i])
           }
        })
