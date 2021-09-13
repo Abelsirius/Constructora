@@ -329,7 +329,9 @@ const showDataBase = (data) =>{
   let showNameAccount = document.querySelector(".name-account-client");
   let resultado = document.querySelector(".resultados-accounts")
   let containerAccounts = document.querySelector(".container-accounts");
-  let containerResults = document.querySelector(".container-resultado");    
+  let containerResults = document.querySelector(".container-resultado");
+  let divcontenedor = document.createElement("DIV");
+  divcontenedor.classList.add("contenedor-result")    
   let contentAdd = document.querySelector(".content-add");
   let h2 = document.createElement("H2");
   let span = document.createElement("SPAN");
@@ -355,8 +357,9 @@ const showDataBase = (data) =>{
   h2.textContent = "Cuenta de:  " 
   b.textContent = data.name;
   h2.appendChild(b)
-  resultado.appendChild(h2)
-  resultado.appendChild(span)
+  divcontenedor.appendChild(h2)
+  divcontenedor.appendChild(span)
+  resultado.appendChild(divcontenedor)
 }
 
 

@@ -176,10 +176,12 @@
     justify-content: center;
     align-items: center;
     padding: 20px 20px;
+    border-top: 1px solid;
 }
     .eliminarAcc:hover{
        color: #fff;
        background: #b21;
+           border-top: 1px solid;
     }
       #monto{
          width: 150px;
@@ -352,7 +354,7 @@ select:focus > option:checked {
           font-size: 25px;
           color: #e36e00;
         }
-         .resultados-accounts{
+         .contenedor-result{
 position: relative;
     width: 100%;
     height: fit-content;
@@ -366,7 +368,7 @@ position: relative;
                background: #fcf8f2;
          }
 
-         .resultados-accounts h2{
+         .contenedor-result h2{
              flex: 1;
             cursor: pointer;
              padding: 20px 15px;
@@ -377,10 +379,10 @@ position: relative;
              border-top: 1px solid #111;
              transition: .3s;
          }
-                .resultados-accounts h2 b{
+                .contenedor-result h2 b{
                   color: #614d15;
                 }
-                  .resultados-accounts h2:hover{
+                  .contenedor-result h2:hover{
                       background: #ccc;
                   }
                .result-title{
