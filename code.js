@@ -89,27 +89,27 @@ btnCreateAcc.addEventListener("click",()=>{
   	   localStorage.setItem("nameAccount",nombreAccount)
   	   console.log(nombreAccount)
        let request = indexedDB.open(nombreAccount);
-    request.addEventListener("success",()=>{
-    	let db = request.result;
-    	let nameObjectStore = db.objectStoreNames[0];
-    	localStorage.setItem("nameObjectStore", nameObjectStore)
-
-    	console.log(nameObjectStore);
-    	let transactionDB = db.transaction(nameObjectStore,"readonly");
-    		 document.querySelector(".nombres").innerHTML = "";
-    	const documentFrag = document.createDocumentFragment();
-    	let object = transactionDB.objectStore(nameObjectStore)
-    	let cursor = object.openCursor();
-    	cursor.addEventListener("success",()=>{
+       if (localStorage != null) {
+        request.addEventListener("success",()=>{
+        let db = request.result;
+        let nameObjectStore = db.objectStoreNames[0];
+        localStorage.setItem("nameObjectStore", nameObjectStore)
+        let transactionDB = db.transaction(nameObjectStore,"readonly");
+             document.querySelector(".nombres").innerHTML = "";
+        const documentFrag = document.createDocumentFragment();
+        let object = transactionDB.objectStore(nameObjectStore)
+        let cursor = object.openCursor();
+        cursor.addEventListener("success",()=>{
         if (cursor.result) {
             let contentHTML  = HTMLCode(cursor.result.key, cursor.result.value, cursor.result.value, nombreAccount , nameObjectStore);
             documentFrag.appendChild(contentHTML)
             cursor.result.continue();
         }else{
-        	 document.querySelector(".nombres").appendChild(documentFrag)
+             document.querySelector(".nombres").appendChild(documentFrag)
         }
-    	})
+        })
     })
+       }
    
    }
 
@@ -313,7 +313,6 @@ const HTMLCode = (id,name,monto) =>{
 
 const deleteAccountDB = (nombre)=>{
     let  borrarDataBase = indexedDB.deleteDatabase(nombre);
-
     borrarDataBase.addEventListener("success",(e)=>{
     console.log("La Base De Datos Fue Eliminada CORRECTAMENTE")
     })
@@ -457,7 +456,7 @@ menubar.addEventListener("click",()=>{
 
 window.addEventListener("DOMContentLoaded",()=>{
     let h1Rofl = document.querySelector(".name-account-client");
-    let name = localStorage.getItem("nameAccount");
+    let name = localStorage.getItem("nameObjectStore");
     if (name) {
         h1Rofl.textContent = name;
     }
