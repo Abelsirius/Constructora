@@ -2,6 +2,7 @@
          padding: 0;
          margin: 0;
          overflow-x: hidden;
+         background: #ddd;
       }
 
 
@@ -15,7 +16,7 @@
       h1{ 
          padding: 0 10px;
          font-size: 25px;
-         color: #ffb700;
+         color: #555;
       }
       .option-accounts{
           display: flex;
@@ -24,7 +25,7 @@
           list-style: none;
       }
       .option-item{
-         color: #ffb700;
+         color: #333;
          font-size: 18px;
          font-weight: lighter;
          padding: 0px 5px;
@@ -92,15 +93,15 @@
       }
 
       .nombre{
-         border-top: 1px solid #ad7c00;
-         background: linear-gradient(160deg,#fff,#ffdf8f);
-         display: flex;
-         justify-content:space-between;
-         align-items: center;
-         flex-wrap: wrap;
-         margin: auto;
-         width: 100%;
-
+border-top: 1.6px solid #222;
+    background: linear-gradient(
+160deg,#555,#999);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 100%;
       }
       .content-resultados-of-buy {
     display: flex;
@@ -109,7 +110,7 @@
     flex-direction: column;
      }
       h2{
-         color:#ffc636;
+         color:#ccc;
          font-size: 35px;
          font-weight: 900;
          padding: 0;
@@ -135,16 +136,16 @@
          margin-left: 25px;
       } 
       #btn-add{ 
-         color: #fcedc7;
+         color: #eee;
          font-size: 15px;
          font-weight: lighter;
-         text-shadow: 1px 1px 5px #fff;
+         text-shadow: 1px 1px 10px #fff;
       } 
       .showNames{
-          color: #fcedc7;
+          color: #eee;
          font-size: 15px;
          font-weight: lighter;
-         text-shadow: 1px 1px 4px #fff;
+         text-shadow:1px 1px 10px #fff;
       }
       .contentInputs{
          display: flex;
@@ -191,8 +192,12 @@
          font-weight: lighter;
          border: none;
          outline: none;
-         background: linear-gradient(60deg,#edb415,#f5d57d);
+         color: #eee;
+         background: linear-gradient(60deg,#999,#555);
       }
+            #monto::placeholder{
+                color: #eee;
+            }
       .content-add{
          text-align: center;
       }
@@ -200,37 +205,37 @@
          margin: 10px 0px;
          display: inline-block;
          width: 200px;
-         background: linear-gradient(60deg,#edb415,#f5d57d);
+         background: linear-gradient(60deg,#999,#555);
          outline: none;
          padding: 5px ; 
          border-radius: 5px;
          border: none;
          font-size: 15px;
          font-weight: lighter;
-         color:#8a6401;
+         color:#eee;
       }
       #nombre option{
           min-height: 50px;
           font-size: 15px;
           font-weight: lighter;
-          color:#faeecd;
-          background:#edb415;
+          color:#fff;
+          background:#555;
       }
       .options-btn{
           padding: 5px 0px;
-          background: linear-gradient(60deg,#edb415,#f5d57d);
+          background: linear-gradient(60deg,#999,#222);
           border-radius: 5px 5px 0px 0px;
       }
 
   select::-webkit-scrollbar {
     width: .60rem;
-    background-color:#f5e7c4;
+    background-color:#999;
 }
 select::-webkit-scrollbar-thumb {
-    background-color:#8c6400;
+    background-color:#555;
 }
 select:focus > option:checked { 
-    background: #b08002!important;
+    background: #999!important;
 }
 
 .hidden{
@@ -391,10 +396,10 @@ position: relative;
                   font-size: 25px;
                   font-weight: 600;
                   text-align: center;
-                  color: #ffb700;
+                  color: #aaa;
                }   
             .container-resultado{
-               background: #fcf8f2;
+               background: #eee;
             }
 
               .content-resultados-of-buy .monto{
@@ -409,11 +414,11 @@ position: relative;
               }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #edb415;
+    background-color: #555;
 }          
 ::-webkit-scrollbar {
     width: .60rem;
-    background-color: #f5e7c4;
+    background-color: #999;
 }
                .nota{
     position: relative;
@@ -429,7 +434,7 @@ position: relative;
                 .content-resultados-of-buy .monto h3{
                   font-size: 18px;
                   font-weight: 400;
-                  color: #ba5f14;
+                  color: #222;
                   padding: 0 20px;
                   display: flex;
                   justify-content: center;
@@ -438,7 +443,7 @@ position: relative;
                 } 
                 .clienteName{
                   margin: 5px 0px;
-                  color: #ff6f00;
+                  color: #1118;
                   font-weight: 900;
                 }
                 
@@ -455,6 +460,7 @@ position: relative;
                            padding: 10px 5px;
                 }
                 .montoOfAccountClient{
+                    text-transform: uppercase;
                   color: #fff;
                   font-size: 20px;
                   font-weight: 600;
