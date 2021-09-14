@@ -118,9 +118,9 @@ border-top: 1.6px solid #222;
          text-align: center;
       }
       h3{
-         color: #2a2;
-         font-size: 20px;
-         font-weight: lighter;
+    color: #18f523;
+    font-size: 25px;
+    font-weight: revert;
 
       }
       button{

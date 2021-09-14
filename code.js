@@ -203,18 +203,13 @@ const HTMLCode = (id,name,monto) =>{
     h3.classList.add("dinero");
 
     h2.textContent = name.nombre;
-    h2.setAttribute("contenteditable","true")
     h2.setAttribute("spellcheck","false")
     h3.textContent = "S/  " +monto.monto;
-    h3.setAttribute("contenteditable","true")
     h3.setAttribute("spellcheck","false")    
 
     let divOptions = document.createElement("DIV");
     divOptions.classList.add("options")
 
-    let botonSave = document.createElement("BUTTON");
-    botonSave.textContent = "Guardar";
-    botonSave.classList.add("imposbile")
     
     h2.addEventListener("keyup",(e)=>{
         console.log(name.nombre)
@@ -239,29 +234,11 @@ const HTMLCode = (id,name,monto) =>{
     contentInputs.appendChild(h2)
     contentInputs.appendChild(h3)
 
-
-    divOptions.appendChild(botonSave);
     divOptions.appendChild(botonDelete);
 
     div.appendChild(contentInputs)
     div.appendChild(divOptions);
 
-     botonSave.addEventListener("click",(e)=>{
-       if (h2.textContent.length > 1) {
-             if (botonSave.className == "posible") {
-             	 console.log(h2.textContent)
-                 modificarObject(id,h2.textContent,h3.textContent)
-                 botonSave.classList.replace("posible","imposbile")
-
-        }
-        else if (e.path[2].children[0].innerHTML.length === 0){
-            console.log("no pusiste nada")    
-       }
-       else{
-        console.log("paso un error")
-       }
-        }
-    })
 
     
        botonDelete.addEventListener("click",()=>{
@@ -419,7 +396,7 @@ document.querySelector(".accounts").addEventListener("click",()=>{
                             let result = text.replace("S/ ","");
                             suma+= Number(result);
                         }
-                       contentnumber.textContent = "S/  " + suma;
+                       contentnumber.textContent = "S/  " + suma.toFixed(2);
                       })
          }
 
