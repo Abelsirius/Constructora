@@ -253,7 +253,6 @@ select:focus > option:checked {
 .numbers span{
    color: #333;
    font-size: 13px;
-   font-weight: lighter;
 }
 .data-new-acc{
        display: flex;
@@ -304,6 +303,7 @@ select:focus > option:checked {
 }
 
    .total-pago{ 
+    width: 290px;
    border-top: 1px solid #111;
     min-width: 150px;
     display: flex;
@@ -408,6 +408,7 @@ position: relative;
                    align-items: center;
               }
               .contents-result-numbers{
+                width: 290px;
                padding: 10px 20px;
                overflow-y: scroll;
                height: 280px;

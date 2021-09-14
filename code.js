@@ -46,7 +46,9 @@ document.getElementById("btn-add").addEventListener("click",()=>{
 
      if (nombre.length > 0 & monto.length > 0) {
         if (nameAcc != null  & nameObjectStore != null) {
-         addObjects({nombre,monto});
+         let fecha = new Date();
+         let fechaDelFio = `${fecha.getDate()}/${fecha.getMonth()}/${fecha.getYear()-100}`;
+         addObjects({nombre,monto,fechaDelFio});
         leerObjectos();
         }else{
             error("No Hay Cuentas Registradas")
@@ -85,9 +87,9 @@ btnCreateAcc.addEventListener("click",()=>{
 
 
 
-  const mostrarCuenta =(nombreAccount)=>{
+  const mostrarCuenta =(nombreAccount,fecha)=>{
   	   localStorage.setItem("nameAccount",nombreAccount)
-  	   console.log(nombreAccount)
+  	   console.log(fecha)
        let request = indexedDB.open(nombreAccount);
        if (localStorage != null) {
         request.addEventListener("success",()=>{
@@ -101,7 +103,7 @@ btnCreateAcc.addEventListener("click",()=>{
         let cursor = object.openCursor();
         cursor.addEventListener("success",()=>{
         if (cursor.result) {
-            let contentHTML  = HTMLCode(cursor.result.key, cursor.result.value, cursor.result.value, nombreAccount , nameObjectStore);
+            let contentHTML  = HTMLCode(cursor.result.key, cursor.result.value, cursor.result.value, nombreAccount , nameObjectStore,fecha);
             documentFrag.appendChild(contentHTML)
             cursor.result.continue();
         }else{
@@ -113,7 +115,7 @@ btnCreateAcc.addEventListener("click",()=>{
    
    }
 
-const addObjects = (obj, monto) =>{    
+const addObjects = (obj, monto,fecha) =>{    
      let nameAcc = localStorage.getItem("nameAccount");
     let nameObjectStore = localStorage.getItem("nameObjectStore");
 
@@ -124,7 +126,7 @@ const addObjects = (obj, monto) =>{
         const db = indexedDBRequest.result;
         const idbTransaction = db.transaction(nameObjectStore,"readwrite")
         const objectStore = idbTransaction.objectStore(nameObjectStore);
-        objectStore.add(obj, monto)
+        objectStore.add(obj, monto,fecha)
     })
 }else{
     alert("no hay cuentas")
@@ -303,6 +305,7 @@ const deleteAccountDB = (nombre)=>{
     location.reload();
 }
 const showDataBase = (data) =>{
+    console.log(data)
   let showNameAccount = document.querySelector(".name-account-client");
   let resultado = document.querySelector(".resultados-accounts")
   let containerAccounts = document.querySelector(".container-accounts");
@@ -328,7 +331,7 @@ const showDataBase = (data) =>{
         containerResults.classList.replace("visible","hidden");
 
     }
-  	mostrarCuenta(data.name)
+  	mostrarCuenta(data.name,data.fechaDelFio)
   })
   let b = document.createElement("B");
   h2.textContent = "Cuenta de:  " 
@@ -362,7 +365,7 @@ document.querySelector(".accounts").addEventListener("click",()=>{
 })
 
 
-        const numbers = (numeros,producto,nombreCliente)=>{
+        const numbers = (numeros,producto,nombreCliente,fecha)=>{
          let h3Content = document.querySelector(".nameOfAccountClient")
          let containerResults = document.querySelector(".content-resultados-of-buy");
          let p = document.createElement("P");
@@ -377,7 +380,13 @@ document.querySelector(".accounts").addEventListener("click",()=>{
                     p.textContent = nombreCliente;
                     h3Content.appendChild(p)
          }
+         let bFecha = document.createElement("B");
+         bFecha.classList.add("fecha");
+         bFecha.style.padding = "0 0 0 5px"
+         bFecha.style.fontWeight = "lighter"
+         bFecha.textContent = fecha;
         span.textContent = producto;
+        span.appendChild(bFecha)
          b.textContent ="S/ " + numeros;
          b.classList.add("numbers");
          b.appendChild(span)
@@ -427,7 +436,8 @@ btnResultados.addEventListener("click",()=>{
         const cursor = objectStore.openCursor();
         cursor.addEventListener("success",()=>{
          if (cursor.result) {
-            numbers(cursor.result.value.monto, cursor.result.value.nombre, cursor.result.source.name)
+            console.log(cursor.result.value.fechaDelFio)
+            numbers(cursor.result.value.monto, cursor.result.value.nombre, cursor.result.source.name,cursor.result.value.fechaDelFio)
             cursor.result.continue();
             }
         })        
